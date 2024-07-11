@@ -1,0 +1,16 @@
+# yaml-language-server: $schema=https://raw.githubusercontent.com/swarmlibs/dockerstack-schema/main/schema/dockerstack-spec.json
+
+services:
+
+  node_metadata:
+    image: swarmlibs/node-metadata-agent:main
+    volumes:
+      - type: bind
+        source: /var/run/docker.sock
+        target: /var/run/docker.sock
+        read_only: true
+    deploy:
+      placement:
+        max_replicas_per_node: 1
+        constraints:
+          - node.role == manager
