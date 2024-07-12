@@ -4,7 +4,7 @@ This stack provided necessary services for other stacks operate.
 
 **Service included**:
 
-- [node-metadata-agent](https://github.com/swarmlibs/node-metadata-agent): A metadata agent for Swarm Node, provide node labels for running stacks/services on a given node.
+- [node-labelling-agent](https://github.com/swarmlibs/node-labelling-agent): A labelling agent for Swarm Node, provide node labels for running stacks/services on a given node.
 
 ## Deploy
 

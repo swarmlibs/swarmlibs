@@ -1,16 +1,35 @@
 # yaml-language-server: $schema=https://raw.githubusercontent.com/swarmlibs/dockerstack-schema/main/schema/dockerstack-spec.json
 
+x-agent-resources-constraints: &x-agent-resources-constraints
+  limits:
+    memory: 128M
+  reservations:
+    memory: 64M
+
+x-default-logging: &x-default-logging
+  options:
+    max-size: "12m"
+    max-file: "5"
+  driver: json-file
+
 services:
 
-  node_metadata:
-    image: swarmlibs/node-metadata-agent:main
+  # ====================================================
+  # Node Labelling Agent
+  # https://github.com/swarmlibs/node-labelling-agent
+  # ====================================================
+
+  node_labelling_agent:
+    image: swarmlibs/node-labelling-agent:main
     volumes:
       - type: bind
         source: /var/run/docker.sock
         target: /var/run/docker.sock
         read_only: true
     deploy:
+      mode: global
       placement:
-        max_replicas_per_node: 1
         constraints:
           - node.role == manager
+      resources: *x-agent-resources-constraints
+    logging: *x-default-logging
