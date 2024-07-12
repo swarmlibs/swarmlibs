@@ -18,7 +18,9 @@ Then use the downloaded YML manifest to deploy your stack:
 docker stack deploy -c swarmlibs-stack.yml swarmlibs
 ```
 
-**Oneline installer**
+### Quick Deploy
+
+You can also deploy the stack directly from the web:
 
 ```sh
 curl -L https://raw.githubusercontent.com/swarmlibs/swarmlibs/main/docker-stack.yml | docker stack deploy -c - swarmlibs
