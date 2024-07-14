@@ -1,10 +1,13 @@
 # yaml-language-server: $schema=https://raw.githubusercontent.com/swarmlibs/dockerstack-schema/main/schema/dockerstack-spec.json
-
-x-agent-resources-constraints: &x-agent-resources-constraints
-  limits:
-    memory: 128M
-  reservations:
-    memory: 64M
+x-deploy: &x-deploy
+  placement:
+    constraints:
+      - node.role == manager
+  resources:
+    limits:
+      memory: 32M
+    reservations:
+      memory: 16M
 
 x-default-logging: &x-default-logging
   options:
@@ -26,10 +29,5 @@ services:
         source: /var/run/docker.sock
         target: /var/run/docker.sock
         read_only: true
-    deploy:
-      mode: global
-      placement:
-        constraints:
-          - node.role == manager
-      resources: *x-agent-resources-constraints
+    deploy: *x-deploy
     logging: *x-default-logging
