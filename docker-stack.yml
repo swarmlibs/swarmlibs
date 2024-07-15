@@ -24,7 +24,7 @@ services:
   # ====================================================
 
   node_labelling_agent:
-    image: swarmlibs/node-labelling-agent:main
+    image: swarmlibs/node-labelling-agent:0.1.0-rc.1
     volumes:
       - type: bind
         source: /var/run/docker.sock
