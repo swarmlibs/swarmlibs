@@ -10,7 +10,7 @@ This stack provided necessary services for other stacks operate.
 
 First, retrieve the stack YML manifest:
 ```sh
-curl -L https://raw.githubusercontent.com/swarmlibs/swarmlibs/main/docker-stack.yml -o swarmlibs-stack.yml
+curl -L https://raw.githubusercontent.com/swarmlibs/swarmlibs/main/swarmlibs-stack.yml -o swarmlibs-stack.yml
 ```
 
 Then use the downloaded YML manifest to deploy your stack:
