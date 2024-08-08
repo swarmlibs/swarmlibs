@@ -1,5 +1,5 @@
 DOCKER_STACK_NAME := swarmlibs
-DOCKER_STACK_COMPOSE_FILE := docker-stack.yml
+DOCKER_STACK_COMPOSE_FILE := swarmlibs-stack.yml
 make:
 	@docker stack config -c $(DOCKER_STACK_COMPOSE_FILE)
 deploy:
