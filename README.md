@@ -35,4 +35,6 @@ lutfgiv4xtcx   swarmlibs_node_metadata   replicated   1/1 (max 1 per node)   swa
 
 ## Remove
 
-TBD
+```sh
+docker stack rm swarmlibs
+```
