@@ -1,15 +1,4 @@
 # yaml-language-server: $schema=https://raw.githubusercontent.com/swarmlibs/dockerstack-schema/main/schema/dockerstack-spec.json
-x-deploy: &x-deploy
-  mode: global
-  placement:
-    constraints:
-      - node.role == manager
-  resources:
-    limits:
-      memory: 32M
-    reservations:
-      memory: 16M
-
 x-default-logging: &x-default-logging
   options:
     max-size: "12m"
@@ -19,10 +8,45 @@ x-default-logging: &x-default-logging
 services:
 
   # ====================================================
+  # crazy-max/swarm-cronjob
+  # https://github.com/crazy-max/swarm-cronjob
+  # ====================================================
+  cronjob_service:
+    image: crazymax/swarm-cronjob
+    environment:
+      - "TZ=${TZ:-UTC}"
+      - "LOG_LEVEL=info"
+      - "LOG_JSON=false"
+    volumes:
+      - type: bind
+        target: /var/run/docker.sock
+        source: /var/run/docker.sock
+        read_only: false
+    deploy:
+      mode: replicated
+      replicas: 1
+      restart_policy:
+        condition: any
+        delay: 5s
+      update_config:
+        parallelism: 1
+        delay: 10s
+      rollback_config:
+        parallelism: 1
+        delay: 10s
+      resources:
+        limits:
+          memory: 32M
+        reservations:
+          memory: 16M
+      placement:
+        constraints:
+          - node.role == manager
+
+  # ====================================================
   # Node Labelling Agent
   # https://github.com/swarmlibs/node-labelling-agent
   # ====================================================
-
   node_labelling_agent:
     image: swarmlibs/node-labelling-agent:0.1.0-rc.1
     volumes:
@@ -30,5 +54,23 @@ services:
         source: /var/run/docker.sock
         target: /var/run/docker.sock
         read_only: true
-    deploy: *x-deploy
+    deploy:
+      mode: global
+      restart_policy:
+        condition: any
+        delay: 5s
+      update_config:
+        parallelism: 1
+        delay: 10s
+      rollback_config:
+        parallelism: 1
+        delay: 10s
+      resources:
+        limits:
+          memory: 32M
+        reservations:
+          memory: 16M
+      placement:
+        constraints:
+          - node.role == manager
     logging: *x-default-logging
