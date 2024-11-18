@@ -6,7 +6,6 @@ x-default-logging: &x-default-logging
   driver: json-file
 
 services:
-
   # ====================================================
   # crazy-max/swarm-cronjob
   # https://github.com/crazy-max/swarm-cronjob
@@ -42,6 +41,7 @@ services:
       placement:
         constraints:
           - node.role == manager
+    logging: *x-default-logging
 
   # ====================================================
   # Node Labelling Agent
